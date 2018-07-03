@@ -1,0 +1,53 @@
+Nombre de la aplicación:
+Objetivos de la aplicación:
+	1. Facilitar el seguimiento del guión de los círculos.
+	2. Facilitar el acceso a los textos preparados para el círculo.
+Descripción por pantallas:
+	1. Pantalla de inicio: Menú simple a elegir: guiones, directorio o ayuda.
+	2. Menú lateral idéntico al menú de inicio
+	3. Guión: Texto plano con el guión fijo, espacios reservados para texto o imagenes y botón de acceso a las notas.
+	4. Directorio: Acceso a los documentos e imágenes guardadas.
+	5. Ayuda: ventana tutorial de la aplicación.
+Funcionalidades por pantalla:
+	1. Inicio:
+		1.1. Botones que redirijan a los guiones / directorio / ayuda.
+	2. Menú: 
+		2.1. Botones que redirijan a los guiones / directorio.
+		2.2. Guardado de estados al cambiar de ventana.
+	3. Guión:
+		3.1. Botón de reinicio o vaciado de todo.
+		3.2. En cada espacio, botón de añadir con acceso al directorio, galeria y gestor de archivos del movil.
+		3.3. En cada espacio, botón de vaciado individual.
+		3.4. A estudiar: Identificación automática del evangelio del día.
+		3.5. Opción de añadir nota al seleccionar un trozo de texto.
+		3.6. Visualización de indicador en el texto donde exista una nota.
+		3.7. Posibilidad de eliminar o editar una nota existente.
+		3.8. En cada espacio boton de guardar cambios.
+		3.9. Al abrir la pantalla cargar guardados anteriores.
+		3.10. En cada espacio boton de editar si es texto.
+	4. Directorio:
+		4.1. A decidir: creacion de directorio propio dentro del movil con copias de todos los documentos e imagenes o listado de accessos directos a los documentos e imagenes existentes.
+		4.1. Directorio visual: cuadrantes con imagen o icono y nombre debajo.
+	5. Ayuda:
+		5.1. Pantalla superpuesta con slides de ayuda para cada funcionalidad.
+		5.2. Cada slide con una pequeña descripción y una imagen esquemática.
+		5.3. Cada slide con boton para ir a la aterior, a la siguiente o para cerrar la ventana de ayuda.
+		5.4. Sildes:
+			5.4.1. ¡Bienvenido a *nombre*! Imagen: logo. La app que te ayuda a seguir el guión.
+			5.4.2. Abre el guión que vayas a necesitar y personaliza las diferentes partes. Imagen: esquema de abrir guión y rellenar espacio.
+			5.4.3. Añade texto e incluso imágenes a tu guión. Imagen. esquema de añadir texto o imagen y resultado.
+			5.4.4. Puedes añadir notas donde quieras y visualizarlas cuando quieras. Imagen: esquema de creación de notas y visualización.
+			5.4.5. Gestiona tu propio directorio para acceder más fácilmente a tus documentos e imagenes. Imagen: esquema del directorio y como añadir objetos.
+			5.4.5. Disfruta de una forma más fácil de dar un círculo con *nombre*. Imagen: logo.
+			
+Base de datos SQLite:
+	1. Estados: tabla con: tipo, evangelio, comentario, norma, charla, noticias.
+	2. Notas: tabla con: tipo, texto, posiciónIni, posiciónFin, nota
+			
+Posibles nombres:
+	1. Guión circulo.
+	2. 
+Posibles mejoras:
+	1. Detección automática del evangelio.
+	2. Multilengua.
+	3. MultiImagen: Lista de imagenes (Recycler view con adaptador)

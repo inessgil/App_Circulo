@@ -1,0 +1,6 @@
+<h1>Círculo de estudios</h1>
+<p> 1. </p>
+<p style="color:red;"> Estando todos de rodillas, quien dirige dice: </p>
+<br>
+<p> Veni, Sancte Spíritus, reple tuórum corda fidélium: et tui amóris in eis ignem accénde. </p>
+<p style="color:red;"> V. </p>
