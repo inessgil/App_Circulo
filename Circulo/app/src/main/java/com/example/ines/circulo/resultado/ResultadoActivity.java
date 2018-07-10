@@ -9,7 +9,7 @@ import com.example.ines.circulo.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Resultado extends AppCompatActivity {
+public class ResultadoActivity extends AppCompatActivity {
 
     int checked;
 

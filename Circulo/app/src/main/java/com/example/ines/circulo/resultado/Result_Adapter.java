@@ -23,7 +23,7 @@ public class Result_Adapter extends RecyclerView.Adapter<Result_Adapter.ResultVi
     Context context;
 
     List<Result_item> list;
-    int checked;
+    private int checked;
 
     public Result_Adapter(List<Result_item> list) {
         this.list = list;

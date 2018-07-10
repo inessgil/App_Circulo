@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TiposFecha extends AppCompatActivity {
+public class TiposFechaActivity extends AppCompatActivity {
 
     @BindView(R.id.rb_group)
     RadioGroup group;
@@ -55,7 +55,7 @@ public class TiposFecha extends AppCompatActivity {
             if (checked == -1)
                 Toast.makeText(this, "Por favor, selecciona un círculo", Toast.LENGTH_SHORT).show();
             else {
-                //TODO: create new .txt with date and type on the name
+                //TODO: Check if file already exists
             }
         }
 

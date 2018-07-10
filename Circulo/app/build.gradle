@@ -30,4 +30,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation project(path: ':data')
+    compile project(path: ':domain')
 }

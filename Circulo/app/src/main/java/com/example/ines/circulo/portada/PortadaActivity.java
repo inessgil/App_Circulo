@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.ines.circulo.R;
-import com.example.ines.circulo.tiposfecha.TiposFecha;
+import com.example.ines.circulo.tiposfecha.TiposFechaActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +19,7 @@ import butterknife.OnClick;
  * Create a new Circulo
  */
 
-public class Portada extends AppCompatActivity {
+public class PortadaActivity extends AppCompatActivity {
 
     @BindView(R.id.b_nuevo)
     Button nuevo;
@@ -40,13 +40,13 @@ public class Portada extends AppCompatActivity {
      */
     @OnClick(R.id.b_nuevo)
     public void nuevo_circulo () {
-        Intent intent = new Intent(this, TiposFecha.class);
+        Intent intent = new Intent(this, TiposFechaActivity.class);
         intent.putExtra("TYPE", 0);
         startActivity(intent);
     }
     @OnClick(R.id.b_cargar)
     public void cargar_circulo () {
-        Intent intent = new Intent(this, TiposFecha.class);
+        Intent intent = new Intent(this, TiposFechaActivity.class);
         intent.putExtra("TYPE", 1);
         startActivity(intent);
     }

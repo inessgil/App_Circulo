@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.util.List;
 
 /**
- * Adapter for an element on Guion's spaces
+ * Adapter for an element on GuionActivity's spaces
  * Every space will have a list of the elements specified in this adapter
  * Every element contains an image or text
  * At the creation of the adapter there are delivered a list of paths to this images or texts

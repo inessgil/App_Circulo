@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.ines.circulo.R;
 
-public class Guion extends AppCompatActivity {
+public class GuionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
