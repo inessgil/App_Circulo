@@ -13,7 +13,12 @@ public interface ReadWriteDataSource {
 
     void newCirculo (String date, String name) throws IOException;
 
-    void writeCirculo (String date, String name, String topic, String type, String content) throws IOException;
+    void editText (String date, String name, String topic, String text) throws IOException;
+    void addImage (String date, String name, String topic, String dir) throws IOException;
+    void addDoc (String date, String name, String topic, String dir) throws IOException;
+
+    void deleteImage (String date, String name, String topic, String dir) throws IOException;
+    void deleteDoc (String date, String name, String topic, String dir) throws IOException;
 
     Circulo getCirculo (String date, String name) throws IOException;
 

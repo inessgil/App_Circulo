@@ -18,12 +18,12 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-public class InternalStorageDataSource implements ReadWriteDataSource {
+public class StorageDataSource implements ReadWriteDataSource {
 
     Context context;
 
     @Inject
-    InternalStorageDataSource (Context context) {
+    StorageDataSource(Context context) {
         this.context = context;
     }
 
@@ -60,7 +60,7 @@ public class InternalStorageDataSource implements ReadWriteDataSource {
     @Override
     public void newCirculo(String date, String name) throws IOException {
         File file = new File(context.getFilesDir(), date + "_" + name);
-        String content = "<comentario></comentario><norma></norma><charla></charla><tertulia></tertulia>";
+        String content = "<comentario><text></text></comentario><norma><text></text></norma><charla><text></text></charla><tertulia><text></text></tertulia>";
         FileOutputStream outputStream;
         outputStream = context.openFileOutput(date + "_" + name, context.MODE_PRIVATE);
         outputStream.write(content.getBytes());
@@ -68,37 +68,59 @@ public class InternalStorageDataSource implements ReadWriteDataSource {
     }
 
     @Override
-    public void writeCirculo(String date, String name, String topic, String type, String data) throws IOException {
-        String [] circulos = context.fileList();
-        List<String> result = null;
-        for (String c : circulos) {
-            if ( c.contains(name) && c.contains(date)) result.add(c);
-        }
-        StringBuffer content = new StringBuffer("");
-        FileInputStream file = context.openFileInput(result.get(0));
-        InputStreamReader inputStreamReader = new InputStreamReader(file);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String readString = bufferedReader.readLine();
-        while (readString != null) {
-            content.append(readString);
-            readString = bufferedReader.readLine();
-        }
-        inputStreamReader.close();
+    public void editText(String date, String name, String topic, String text) throws IOException {
+        //TODO: if .txt doesnt exists, create new, if it does, save new text
+        /**
+         * External storage
+         * Directory: CirculoApp
+         * Subdirectory: Type
+         * Inside: files with date
+         * If subdirectory does not exists: create it
+         * If file does not exists: create it
+         * Edit file with new data
+         */
+    }
 
-        String[] start = content.toString().split("<" + topic + ">");
-        String[] middle = start[1].split("</" + topic + ">");
-        String end = middle[1];
+    /**
+     * Internal storage:
+     * Files with date_type as name
+     * Inside: xml format with directions to files on external storage
+     */
 
-        String toSave = start[0] + "<" + topic + ">" + middle[0] + "<" + type + "/>" + data + "</" + topic + ">" + end;
-
-        FileOutputStream outputStream;
-        outputStream = context.openFileOutput(date + "_" + name, context.MODE_PRIVATE);
-        outputStream.write(toSave.getBytes());
-        outputStream.close();
+    @Override
+    public void addImage(String date, String name, String topic, String dir) throws IOException {
+        //TODO: add direction
     }
 
     @Override
+    public void addDoc(String date, String name, String topic, String dir) throws IOException {
+
+    }
+
+    @Override
+    public void deleteImage(String date, String name, String topic, String dir) throws IOException {
+
+    }
+
+    @Override
+    public void deleteDoc(String date, String name, String topic, String dir) throws IOException {
+
+    }
+
+    /**
+     * TODO:
+     * Further changes:
+     * - getCirculo: get file
+     * - read circulo: read file
+     * - Once the file is read, create the circulo on domain layer
+     */
+
+    @Override
     public Circulo getCirculo(String date, String name) throws IOException {
+        return createCirculo (readCirculo (date, name));
+    }
+
+    private String readCirculo(String date, String name) {
         String [] circulos = context.fileList();
         List<String> result = null;
         for (String c : circulos) {
@@ -107,17 +129,21 @@ public class InternalStorageDataSource implements ReadWriteDataSource {
         if ( result.isEmpty()) return null;
 
         StringBuffer content = new StringBuffer("");
-        FileInputStream file = context.openFileInput(result.get(0));
-        InputStreamReader inputStreamReader = new InputStreamReader(file);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String readString = bufferedReader.readLine();
-        while (readString != null) {
-            content.append(readString);
-            readString = bufferedReader.readLine();
+        try {
+            FileInputStream file = context.openFileInput(result.get(0));
+            InputStreamReader inputStreamReader = new InputStreamReader(file);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String readString = bufferedReader.readLine();
+            while (readString != null) {
+                content.append(readString);
+                readString = bufferedReader.readLine();
+            }
+            inputStreamReader.close();
         }
-        inputStreamReader.close();
-
-        return createCirculo (content.toString());
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return content.toString();
     }
 
     private Circulo createCirculo(String s) {
