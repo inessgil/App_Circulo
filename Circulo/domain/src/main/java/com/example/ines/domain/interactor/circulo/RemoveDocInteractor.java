@@ -1,7 +1,6 @@
 package com.example.ines.domain.interactor.circulo;
 
 import com.example.ines.domain.CirculoRepository;
-import com.example.ines.domain.entities.Circulo;
 import com.example.ines.domain.exception.ErrorBundle;
 import com.example.ines.domain.executor.PostExecutionThread;
 import com.example.ines.domain.executor.ThreadExecutor;
@@ -10,23 +9,22 @@ import com.example.ines.domain.interactor.DefaultCallback;
 import com.example.ines.domain.interactor.Interactor;
 
 import java.util.Map;
-import javax.inject.Inject;
 
-public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Interactor<Map<String, String>, Circulo> {
+public class RemoveDocInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private GetCirculoCallback callback;
-    private Map<String , String> name;
+private RemoveDocCallback callback;
+private Map<String, String> input;
 
-    public interface GetCirculoCallback extends DefaultCallback<Circulo>{}
+public interface RemoveDocCallback extends DefaultCallback<Void> {}
 
-    CirculoRepository.GetCirculoCallback dataCallback = new CirculoRepository.GetCirculoCallback() {
+    CirculoRepository.RemoveDocCallback dataCallback = new CirculoRepository.RemoveDocCallback() {
         @Override
         public void onError(ErrorBundle errorBundle) {
             notifyOnError(errorBundle, callback);
         }
 
         @Override
-        public void onSuccess(Circulo returnParam) {
+        public void onSuccess(Void returnParam) {
             notifyOnSuccess(returnParam, callback);
         }
     };
@@ -34,8 +32,7 @@ public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Intera
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
 
-    @Inject
-    public GetCirculoInteractor(PostExecutionThread postExecutionThread, ThreadExecutor executor, CirculoRepository repository) {
+    public RemoveDocInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {
         super(postExecutionThread);
         this.repository = repository;
         this.executor = executor;
@@ -43,13 +40,12 @@ public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Intera
 
     @Override
     public void run() {
-        repository.getCirculo(name.get("date"), name.get("name"), dataCallback);
+        repository.removeDoc(input.get("date"), input.get("name"), input.get("topic"), input.get("content"), dataCallback);
     }
 
     @Override
-    public <R extends DefaultCallback<Circulo>> void execute(Map<String, String> input, R defaultCallback) {
-        this.callback = ((GetCirculoCallback) callback);
-        this.name = input;
-        executor.execute(this);
+    public <R extends DefaultCallback<Void>> void execute(Map<String, String> input, R defaultCallback) {
+        this.callback = (RemoveDocCallback) defaultCallback;
+        this.input = input;
     }
 }

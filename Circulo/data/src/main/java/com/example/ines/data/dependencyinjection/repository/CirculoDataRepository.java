@@ -29,7 +29,7 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void GetCirculosByDate(String date, GetCirculosByDateCallback callback) {
+    public void getCirculosByDate(String date, GetCirculosByDateCallback callback) {
         try {
             List<String> list = storageDataSource.getCirculos();
             for ( String i : list) {
@@ -55,7 +55,7 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void GetCirculosByName(String name, GetCirculosByNameCallback callback) {
+    public void getCirculosByName(String name, GetCirculosByNameCallback callback) {
         try {
             List<String> list = storageDataSource.getCirculos();
             for ( String i : list) {
@@ -81,7 +81,7 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void GetCirculos(String date, String name, GetCirculosCallback callback) {
+    public void getCirculos(String date, String name, GetCirculosCallback callback) {
         try {
             List<String> list = storageDataSource.getCirculos();
             for ( String i : list) {
@@ -113,7 +113,7 @@ public class CirculoDataRepository implements CirculoRepository {
      * @param callback
      */
     @Override
-    public void GetCirculo(String date, String name, GetCirculoCallback callback) {
+    public void getCirculo(String date, String name, GetCirculoCallback callback) {
         try {
             Circulo circulo = createCirculo(storageDataSource.getCirculo(date, name));
             callback.onSuccess(circulo);
@@ -213,12 +213,12 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void AddImage(String date, String name, String topic, String content, AddImageCallback callback) {
+    public void addImage(String date, String name, String topic, String content, AddImageCallback callback) {
         addElement(date, name, topic, content, "image", callback);
     }
 
     @Override
-    public void AddDoc(String date, String name, String topic, String content, AddDocCallback callback) {
+    public void addDoc(String date, String name, String topic, String content, AddDocCallback callback) {
         addElement(date, name, topic, content, "doc", callback);
     }
 
@@ -251,7 +251,7 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void EditText(String date, String name, String topic, String content, EditTextCallback callback) {
+    public void editText(String date, String name, String topic, String content, EditTextCallback callback) {
         try {
             if (!storageDataSource.existsCirculo(date, name)) {
                 storageDataSource.newCirculo(date, name);
@@ -273,12 +273,12 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void RemoveImage(String date, String name, String topic, String content, RemoveImageCallback callback) {
+    public void removeImage(String date, String name, String topic, String content, RemoveImageCallback callback) {
         removeElement(date, name, topic, content, "image", callback);
     }
 
     @Override
-    public void RemoveDoc(String date, String name, String topic, String content, RemoveDocCallback callback) {
+    public void removeDoc(String date, String name, String topic, String content, RemoveDocCallback callback) {
         removeElement(date, name, topic, content, "doc", callback);
     }
 
@@ -315,7 +315,7 @@ public class CirculoDataRepository implements CirculoRepository {
     }
 
     @Override
-    public void RemoveCirculo(String date, String name, RemoveCirculoCallback callback) {
+    public void removeCirculo(String date, String name, RemoveCirculoCallback callback) {
         try {
             if (storageDataSource.existsCirculo(date, name)) {
                 storageDataSource.removeCirculo(date, name);

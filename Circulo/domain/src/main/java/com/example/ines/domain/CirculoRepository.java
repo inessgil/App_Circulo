@@ -21,16 +21,16 @@ public interface CirculoRepository {
     interface RemoveDocCallback extends DefaultCallback<Void> {}
     interface RemoveCirculoCallback extends DefaultCallback<Void> {}
 
-    void GetCirculosByDate (String date, GetCirculosByDateCallback callback);
-    void GetCirculosByName (String name, GetCirculosByNameCallback callback);
-    void GetCirculos (String date, String name, GetCirculosCallback callback);
+    void getCirculosByDate(String date, GetCirculosByDateCallback callback);
+    void getCirculosByName(String name, GetCirculosByNameCallback callback);
+    void getCirculos(String date, String name, GetCirculosCallback callback);
 
-    void GetCirculo (String date, String name, GetCirculoCallback callback);
+    void getCirculo(String date, String name, GetCirculoCallback callback);
 
-    void AddImage (String date, String name, String topic, String content, AddImageCallback callback);
-    void AddDoc (String date, String name, String topic, String content, AddDocCallback callback);
-    void EditText (String date, String name, String topic, String content, EditTextCallback callback);
-    void RemoveImage (String date, String name, String topic, String content, RemoveImageCallback callback);
-    void RemoveDoc (String date, String name, String topic, String content, RemoveDocCallback callback);
-    void RemoveCirculo (String date, String name, RemoveCirculoCallback callback);
+    void addImage(String date, String name, String topic, String content, AddImageCallback callback);
+    void addDoc(String date, String name, String topic, String content, AddDocCallback callback);
+    void editText(String date, String name, String topic, String content, EditTextCallback callback);
+    void removeImage(String date, String name, String topic, String content, RemoveImageCallback callback);
+    void removeDoc(String date, String name, String topic, String content, RemoveDocCallback callback);
+    void removeCirculo(String date, String name, RemoveCirculoCallback callback);
 }
