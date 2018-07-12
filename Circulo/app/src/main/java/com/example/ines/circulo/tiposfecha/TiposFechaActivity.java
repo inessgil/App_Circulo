@@ -8,17 +8,23 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.ines.circulo.App;
 import com.example.ines.circulo.R;
+import com.example.ines.circulo.dependencyinjection.activity.ActivityModule;
+import com.example.ines.circulo.dependencyinjection.application.ViewModule;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TiposFechaActivity extends AppCompatActivity {
+public class TiposFechaActivity extends AppCompatActivity implements TiposFechaView{
 
     @BindView(R.id.rb_group)
     RadioGroup group;
@@ -33,12 +39,21 @@ public class TiposFechaActivity extends AppCompatActivity {
     @BindView(R.id.calendar)
     CalendarView calendar;
     int type; //0:new; 1:load existing
+    String [] types = {"estudiantes"};
+
+    @Inject
+    TiposFechaPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipos_fecha);
         ButterKnife.bind(this);
+        ((App) getApplication())
+                .getComponent()
+                .plus(new ActivityModule(this),
+                        new ViewModule(this))
+                .inject(this);
         type = getIntent().getIntExtra("TYPE", -1);
         calendar.setDate(System.currentTimeMillis(),false,true);
         group.clearCheck();
@@ -55,7 +70,7 @@ public class TiposFechaActivity extends AppCompatActivity {
             if (checked == -1)
                 Toast.makeText(this, "Por favor, selecciona un círculo", Toast.LENGTH_SHORT).show();
             else {
-                //TODO: Check if file already exists
+                presenter.newCirculo(date, types[checked]);
             }
         }
 
@@ -69,7 +84,7 @@ public class TiposFechaActivity extends AppCompatActivity {
             }
             else {
                 if (date!=null) {
-                    //TODO: Extract all file names in the directory
+                    presenter.searchAll(date, types[checked]);
                 }
                 if( checked!= -1 ) {
                     //TODO: Extract all file names with the correct name
@@ -80,5 +95,33 @@ public class TiposFechaActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Error de sistema", Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     *
+     * @param errorCode 1:internal error.
+     */
+    @Override
+    public void showError(int errorCode) {
+
+    }
+
+    /**
+     * Load Result activity
+     * @param list
+     */
+    @Override
+    public void showResults(List<String> list) {
+
+    }
+
+    /**
+     * Load Guion activity
+     * @param date
+     * @param type
+     */
+    @Override
+    public void newCirculo(String date, String type) {
+
     }
 }

@@ -4,12 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.ines.circulo.App;
 import com.example.ines.circulo.R;
+import com.example.ines.circulo.dependencyinjection.activity.ActivityModule;
+import com.example.ines.circulo.dependencyinjection.application.ViewModule;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ResultadoActivity extends AppCompatActivity {
+public class ResultadoActivity extends AppCompatActivity implements ResultadoView {
 
     int checked;
 
@@ -18,6 +21,11 @@ public class ResultadoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
         ButterKnife.bind(this);
+        ((App) getApplication())
+                .getComponent()
+                .plus(new ActivityModule(this),
+                        new ViewModule(this))
+                .inject(this);
         checked = -1;
     }
 

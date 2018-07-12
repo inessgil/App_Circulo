@@ -5,8 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.ines.circulo.App;
 import com.example.ines.circulo.R;
+import com.example.ines.circulo.dependencyinjection.activity.ActivityModule;
+import com.example.ines.circulo.dependencyinjection.application.ViewModule;
 import com.example.ines.circulo.tiposfecha.TiposFechaActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,18 +24,26 @@ import butterknife.OnClick;
  * Create a new Circulo
  */
 
-public class PortadaActivity extends AppCompatActivity {
+public class PortadaActivity extends AppCompatActivity implements PortadaView{
 
     @BindView(R.id.b_nuevo)
     Button nuevo;
     @BindView(R.id.b_cargar)
     Button cargar;
 
+    @Inject
+    PortadaPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portada);
         ButterKnife.bind(this);
+        ((App) getApplication())
+                .getComponent()
+                .plus(new ActivityModule(this),
+                        new ViewModule(this))
+                .inject(this);
     }
 
     /**
@@ -40,14 +53,17 @@ public class PortadaActivity extends AppCompatActivity {
      */
     @OnClick(R.id.b_nuevo)
     public void nuevo_circulo () {
-        Intent intent = new Intent(this, TiposFechaActivity.class);
-        intent.putExtra("TYPE", 0);
-        startActivity(intent);
+        presenter.redirect(0);
     }
     @OnClick(R.id.b_cargar)
     public void cargar_circulo () {
+        presenter.redirect(1);
+    }
+
+    @Override
+    public void startNewActivity(int type) {
         Intent intent = new Intent(this, TiposFechaActivity.class);
-        intent.putExtra("TYPE", 1);
+        intent.putExtra("TYPE", type);
         startActivity(intent);
     }
 }

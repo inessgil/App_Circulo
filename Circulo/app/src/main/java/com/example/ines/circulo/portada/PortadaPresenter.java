@@ -10,4 +10,8 @@ public class PortadaPresenter {
     public PortadaPresenter(PortadaView portadaView) {
         this.portadaView = portadaView;
     }
+
+    public void redirect(int i) {
+        portadaView.startNewActivity(i);
+    }
 }
