@@ -1,6 +1,8 @@
 package com.example.ines.data.dependencyinjection.repository.datasource.local;
 
 import android.content.Context;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.example.ines.data.dependencyinjection.repository.datasource.ReadWriteDataSource;
 import com.example.ines.domain.entities.Circulo;
@@ -8,9 +10,11 @@ import com.example.ines.domain.entities.Circulo;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.Buffer;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +24,9 @@ import javax.inject.Inject;
 
 public class StorageDataSource implements ReadWriteDataSource {
 
-    Context context;
+    private Context context;
+    private String EXTERNAL_DIRECTORY = "CirculoApp";
+    private String PATH = Environment.getExternalStorageDirectory().toString();
 
     @Inject
     StorageDataSource(Context context) {
@@ -28,109 +34,105 @@ public class StorageDataSource implements ReadWriteDataSource {
     }
 
     @Override
-    public List<String> getCirculosByDate(String date) throws IOException {
-        String [] circulos = context.fileList();
-        List<String> result = null;
-        for (String c : circulos) {
-            if ( c.contains(date)) result.add(c);
-        }
-        return result;
+    public List<String> getCirculos() throws IOException {
+        String [] list = context.fileList();
+        List<String> output = null;
+        for (String i : list) output.add(i);
+        return output;
     }
 
     @Override
-    public List<String> getCirculosByName(String name) throws IOException {
-        String [] circulos = context.fileList();
-        List<String> result = null;
-        for (String c : circulos) {
-            if ( c.contains(name)) result.add(c);
-        }
-        return result;
-    }
-
-    @Override
-    public List<String> getCirculos(String date, String name) throws IOException {
-        String [] circulos = context.fileList();
-        List<String> result = null;
-        for (String c : circulos) {
-            if ( c.contains(name) && c.contains(date)) result.add(c);
-        }
-        return result;
+    public void saveCirculo(String date, String name, String content) throws IOException {
+        String fileName = date + "_" + name + ".txt";
+        writeInternalStorage(fileName, content);
     }
 
     @Override
     public void newCirculo(String date, String name) throws IOException {
-        File file = new File(context.getFilesDir(), date + "_" + name);
-        String content = "<comentario><text></text></comentario><norma><text></text></norma><charla><text></text></charla><tertulia><text></text></tertulia>";
-        FileOutputStream outputStream;
-        outputStream = context.openFileOutput(date + "_" + name, context.MODE_PRIVATE);
-        outputStream.write(content.getBytes());
-        outputStream.close();
+        File file = new File(context.getFilesDir(), date + "_" + name+".txt");
+        String content = "<comentario><texto></texto></comentario>" +
+                "<norma><texto></texto></norma>" +
+                "<charla><texto></texto></charla>" +
+                "<tertulia><texto></texto></tertulia>";
+        writeInternalStorage(date+"_"+name, content);
     }
 
+    @Override
+    public Boolean existsCirculo(String date, String name) throws IOException {
+        List<String> list = getCirculos();
+        for ( String i : list) {
+            if (i.contains(date+"_"+name)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * This function needs to:
+     * - On external directory:
+     *  - If directory does not exist, create it
+     *  - If subdirectory type does not exist, create it
+     *  - If subdirectory date does not exists, create it
+     *  - If topic file does not exist, create it
+     *  - Save text on file
+     *  CirculoApp > name > date > topic_name_date.txt
+     * - On internal directory:
+     *  - If file does not exist, create it (date_type.txt)
+     *  - Add to file the <text>direction</text> with the access to the text file
+     */
     @Override
     public void editText(String date, String name, String topic, String text) throws IOException {
-        //TODO: if .txt doesnt exists, create new, if it does, save new text
-        /**
-         * External storage
-         * Directory: CirculoApp
-         * Subdirectory: Type
-         * Inside: files with date
-         * If subdirectory does not exists: create it
-         * If file does not exists: create it
-         * Edit file with new data
-         */
-    }
+        String externalFileName = topic + "_" + name + "_" + date + ".txt";
+        String internalFileName = date + "_" + name + ".txt";
 
-    /**
-     * Internal storage:
-     * Files with date_type as name
-     * Inside: xml format with directions to files on external storage
-     */
+        //Eternal storage
+        File appDirectory = new File(PATH + "/" + EXTERNAL_DIRECTORY);
+        appDirectory.mkdirs();
+        appDirectory = new File(PATH + "/" + EXTERNAL_DIRECTORY + "/" + name);
+        appDirectory.mkdirs();
+        appDirectory = new File(PATH + "/" + EXTERNAL_DIRECTORY + "/" + name + "/" + date);
+        appDirectory.mkdirs();
 
-    @Override
-    public void addImage(String date, String name, String topic, String dir) throws IOException {
-        //TODO: add direction
-    }
-
-    @Override
-    public void addDoc(String date, String name, String topic, String dir) throws IOException {
-
-    }
-
-    @Override
-    public void deleteImage(String date, String name, String topic, String dir) throws IOException {
-
-    }
-
-    @Override
-    public void deleteDoc(String date, String name, String topic, String dir) throws IOException {
-
-    }
-
-    /**
-     * TODO:
-     * Further changes:
-     * - getCirculo: get file
-     * - read circulo: read file
-     * - Once the file is read, create the circulo on domain layer
-     */
-
-    @Override
-    public Circulo getCirculo(String date, String name) throws IOException {
-        return createCirculo (readCirculo (date, name));
-    }
-
-    private String readCirculo(String date, String name) {
-        String [] circulos = context.fileList();
-        List<String> result = null;
-        for (String c : circulos) {
-            if ( c.contains(name) && c.contains(date)) result.add(c);
-        }
-        if ( result.isEmpty()) return null;
-
-        StringBuffer content = new StringBuffer("");
+        File extFile = new File(appDirectory, externalFileName);
+        FileOutputStream outputStream;
         try {
-            FileInputStream file = context.openFileInput(result.get(0));
+            outputStream = new FileOutputStream(extFile);
+            outputStream.write(text.getBytes());
+            outputStream.close();
+        } catch (Exception e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        //Internal Storage
+        String content = readFile(internalFileName);
+
+        String [] first = content.split("<" + topic + "><texto>");
+        content = first[0] + "<" + topic + "><texto>" +
+                PATH + "/" + EXTERNAL_DIRECTORY + "/" + name + "/" + date + internalFileName +
+                first[1];
+        writeInternalStorage(internalFileName, content);
+
+    }
+
+    private void writeInternalStorage(String internalFileName, String content) {
+        FileOutputStream outputStream;
+        try {
+            outputStream = context.openFileOutput(internalFileName, Context.MODE_PRIVATE);
+            outputStream.write(content.getBytes());
+            outputStream.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String getCirculo(String date, String name) throws IOException {
+        return readFile (date + "_" + name + ".txt");
+    }
+
+    private String readFile(String fileName) {
+        StringBuilder content = new StringBuilder("");
+        try {
+            FileInputStream file = context.openFileInput(fileName);
             InputStreamReader inputStreamReader = new InputStreamReader(file);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String readString = bufferedReader.readLine();
@@ -146,86 +148,8 @@ public class StorageDataSource implements ReadWriteDataSource {
         return content.toString();
     }
 
-    private Circulo createCirculo(String s) {
-        Circulo circulo = new Circulo();
-        Pattern pattern;
-        Pattern pattern_text = Pattern.compile("(?<=<texto>)(.*?)(?=</texto>)");
-        Pattern pattern_image = Pattern.compile("(?<=<imagen>)(.*?)(?=</imagen>)");
-        Pattern pattern_doc = Pattern.compile("(?<=<doc>)(.*?)(?=</doc>)");
-        String [] text;
-        String [] images;
-        String [] docs;
-        List<String> aux = null;
-
-        /** Extract comentario */
-        pattern = Pattern.compile("(?<=<comentario>)(.*?)(?=</comentario>)");
-        String comentario = pattern.split(s)[0];
-        text = pattern_text.split(comentario);
-        aux.addAll(Arrays.asList(text));
-        circulo.setComentario(aux);
-        aux.clear();
-        images = pattern_image.split(comentario);
-        aux.addAll(Arrays.asList(images));
-        circulo.setImagenesComentario(aux);
-        aux.clear();
-        docs = pattern_doc.split(comentario);
-        aux.addAll(Arrays.asList(docs));
-        circulo.setDocComentario(aux);
-        aux.clear();
-
-        /** Extract norma */
-        pattern = Pattern.compile("(?<=<norma>)(.*?)(?=</norma>)");
-        String norma = pattern.split(s)[0];
-        text = pattern_text.split(norma);
-        aux.addAll(Arrays.asList(text));
-        circulo.setNorma(aux);
-        aux.clear();
-        images = pattern_image.split(norma);
-        aux.addAll(Arrays.asList(images));
-        circulo.setImagenesNorma(aux);
-        aux.clear();
-        docs = pattern_doc.split(norma);
-        aux.addAll(Arrays.asList(docs));
-        circulo.setDocNorma(aux);
-        aux.clear();
-
-        /** Extract charla */
-        pattern = Pattern.compile("(?<=<charla>)(.*?)(?=</charla>)");
-        String charla = pattern.split(s)[0];
-        text = pattern_text.split(charla);
-        aux.addAll(Arrays.asList(text));
-        circulo.setCharla(aux);
-        aux.clear();
-        images = pattern_image.split(charla);
-        aux.addAll(Arrays.asList(images));
-        circulo.setImagenesCharla(aux);
-        aux.clear();
-        docs = pattern_doc.split(charla);
-        aux.addAll(Arrays.asList(docs));
-        circulo.setDocCharla(aux);
-        aux.clear();
-
-        /** Extract tertulia */
-        pattern = Pattern.compile("(?<=<tertulia>)(.*?)(?=</tertulia>)");
-        String tertulia = pattern.split(s)[0];
-        text = pattern_text.split(tertulia);
-        aux.addAll(Arrays.asList(text));
-        circulo.setTertulia(aux);
-        aux.clear();
-        images = pattern_image.split(tertulia);
-        aux.addAll(Arrays.asList(images));
-        circulo.setImagenesTertulia(aux);
-        aux.clear();
-        docs = pattern_doc.split(tertulia);
-        aux.addAll(Arrays.asList(docs));
-        circulo.setDocTertulia(aux);
-        aux.clear();
-
-        return circulo;
-    }
-
     @Override
     public void removeCirculo(String date, String name) throws IOException {
-
+        context.deleteFile(date+"_"+name+".txt");
     }
 }

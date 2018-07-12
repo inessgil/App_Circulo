@@ -7,20 +7,15 @@ import java.util.List;
 
 public interface ReadWriteDataSource {
 
-    List<String> getCirculosByDate (String date) throws IOException;
-    List<String> getCirculosByName (String name) throws IOException;
-    List<String> getCirculos (String date, String name) throws IOException;
+    List<String> getCirculos () throws IOException;
+    void saveCirculo (String date, String name, String content) throws IOException;
 
     void newCirculo (String date, String name) throws IOException;
+    Boolean existsCirculo (String date, String name) throws IOException;
 
     void editText (String date, String name, String topic, String text) throws IOException;
-    void addImage (String date, String name, String topic, String dir) throws IOException;
-    void addDoc (String date, String name, String topic, String dir) throws IOException;
 
-    void deleteImage (String date, String name, String topic, String dir) throws IOException;
-    void deleteDoc (String date, String name, String topic, String dir) throws IOException;
-
-    Circulo getCirculo (String date, String name) throws IOException;
+    String getCirculo (String date, String name) throws IOException;
 
     void removeCirculo (String date, String name) throws IOException;
 }
