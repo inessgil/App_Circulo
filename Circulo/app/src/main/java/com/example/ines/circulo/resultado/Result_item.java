@@ -25,4 +25,12 @@ public class Result_item {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        Result_item item = (Result_item) obj;
+        if(item.getName().equals(this.getName())) return true;
+        return false;
+    }
 }
