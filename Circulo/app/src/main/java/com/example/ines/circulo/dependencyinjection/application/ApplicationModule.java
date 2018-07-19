@@ -6,9 +6,9 @@ import android.support.annotation.UiThread;
 
 import com.example.ines.circulo.App;
 import com.example.ines.circulo.UIThread;
-import com.example.ines.data.dependencyinjection.dependencyinjection.DataModule;
-import com.example.ines.data.dependencyinjection.dependencyinjection.ForApp;
-import com.example.ines.data.dependencyinjection.executor.JobExecutor;
+import com.example.ines.data.dependencyinjection.DataModule;
+import com.example.ines.data.dependencyinjection.ForApp;
+import com.example.ines.data.executor.JobExecutor;
 import com.example.ines.domain.executor.PostExecutionThread;
 import com.example.ines.domain.executor.ThreadExecutor;
 

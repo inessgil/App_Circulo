@@ -1,4 +1,4 @@
-package com.example.ines.data.dependencyinjection.repository.datasource;
+package com.example.ines.data.repository.datasource;
 
 import com.example.ines.domain.entities.Circulo;
 

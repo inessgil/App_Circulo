@@ -1,9 +1,9 @@
 package com.example.ines.circulo.tiposfecha;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.CalendarView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,15 +13,12 @@ import com.example.ines.circulo.App;
 import com.example.ines.circulo.R;
 import com.example.ines.circulo.dependencyinjection.activity.ActivityModule;
 import com.example.ines.circulo.dependencyinjection.application.ViewModule;
+import com.example.ines.circulo.dependencyinjection.qualifier.ForActivity;
 import com.example.ines.circulo.guion.GuionActivity;
-import com.example.ines.circulo.guion.GuionView;
 import com.example.ines.circulo.resultado.ResultadoActivity;
-import com.example.ines.domain.interactor.Interactor;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Future improvements: show different colors on days with a saved Circulo
+ */
 public class TiposFechaActivity extends AppCompatActivity implements TiposFechaView{
 
     @BindView(R.id.rb_group)
@@ -49,6 +49,9 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
 
     @Inject
     TiposFechaPresenter presenter;
+    @Inject
+    @ForActivity
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +70,8 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
 
     @OnClick(R.id.b_aceptar)
     public void submit () {
-        int checked = group.getCheckedRadioButtonId();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMYYYY");
+        int checked = getChecked();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
         String date = simpleDateFormat.format(calendar.getDate());
 
         // NEW
@@ -103,6 +106,17 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
         }
     }
 
+    private int getChecked() {
+        if (group.getCheckedRadioButtonId()==-1) return -1;
+        else {
+            if (circulo_1.isChecked()) return 0;
+            else if (circulo_2.isChecked()) return 1;
+            else if (circulo_3.isChecked()) return 2;
+            else if (circulo_4.isChecked()) return 3;
+        }
+        return -1;
+    }
+
     /**
      *
      * @param errorCode 1:internal error.
@@ -130,7 +144,7 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
      */
     @Override
     public void showResults(List<String> list) {
-        Intent intent = new Intent(this, ResultadoActivity.class);
+        Intent intent = new Intent(context, ResultadoActivity.class);
         ArrayList<String> arrayList = null;
         arrayList.addAll(list);
         intent.putStringArrayListExtra("list", arrayList);
@@ -145,7 +159,7 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
      */
     @Override
     public void newCirculo(String date, String type) {
-        Intent intent = new Intent(this, GuionActivity.class);
+        Intent intent = new Intent(context, GuionActivity.class);
         intent.putExtra("date", date);
         intent.putExtra("type", type);
         intent.putExtra("load", 0);

@@ -15,10 +15,10 @@ import javax.inject.Inject;
 
 public class GetCirculosByDateInteractor extends BaseUseCase<List<String>> implements Interactor<Map<String, String>, List<String>> {
 
-private GetCirculosByDateCallback callback;
-private Map<String , String> name;
+    private GetCirculosByDateCallback callback;
+    private Map<String , String> name;
 
-public interface GetCirculosByDateCallback extends DefaultCallback<List<String>> {}
+    public interface GetCirculosByDateCallback extends DefaultCallback<List<String>> {}
 
     CirculoRepository.GetCirculosByDateCallback dataCallback = new CirculoRepository.GetCirculosByDateCallback() {
         @Override

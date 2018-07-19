@@ -1,4 +1,4 @@
-package com.example.ines.data.dependencyinjection.dependencyinjection;
+package com.example.ines.data.dependencyinjection;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

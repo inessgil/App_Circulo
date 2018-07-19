@@ -1,9 +1,8 @@
 package com.example.ines.circulo.portada;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.ines.circulo.App;
 import com.example.ines.circulo.R;
@@ -13,7 +12,6 @@ import com.example.ines.circulo.tiposfecha.TiposFechaActivity;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,11 +23,6 @@ import butterknife.OnClick;
  */
 
 public class PortadaActivity extends AppCompatActivity implements PortadaView{
-
-    @BindView(R.id.b_nuevo)
-    Button nuevo;
-    @BindView(R.id.b_cargar)
-    Button cargar;
 
     @Inject
     PortadaPresenter presenter;
@@ -55,6 +48,7 @@ public class PortadaActivity extends AppCompatActivity implements PortadaView{
     public void nuevo_circulo () {
         presenter.redirect(0);
     }
+
     @OnClick(R.id.b_cargar)
     public void cargar_circulo () {
         presenter.redirect(1);

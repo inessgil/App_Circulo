@@ -1,10 +1,10 @@
-package com.example.ines.data.dependencyinjection.repository;
+package com.example.ines.data.repository;
 
 
 import android.content.Context;
 
-import com.example.ines.data.dependencyinjection.dependencyinjection.ForApp;
-import com.example.ines.data.dependencyinjection.repository.datasource.local.StorageDataSource;
+import com.example.ines.data.dependencyinjection.ForApp;
+import com.example.ines.data.repository.datasource.ReadWriteDataSource;
 import com.example.ines.domain.CirculoRepository;
 import com.example.ines.domain.entities.Circulo;
 import com.example.ines.domain.exception.ErrorBundle;
@@ -20,10 +20,10 @@ import javax.inject.Inject;
 public class CirculoDataRepository implements CirculoRepository {
 
     private final Context context;
-    private final StorageDataSource storageDataSource;
+    private final ReadWriteDataSource storageDataSource;
 
     @Inject
-    CirculoDataRepository(StorageDataSource storageDataSource, @ForApp Context context) {
+    CirculoDataRepository(ReadWriteDataSource storageDataSource, @ForApp Context context) {
         this.context = context;
         this.storageDataSource = storageDataSource;
     }

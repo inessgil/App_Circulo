@@ -1,24 +1,18 @@
-package com.example.ines.data.dependencyinjection.repository.datasource.local;
+package com.example.ines.data.repository.datasource.local;
 
 import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.example.ines.data.dependencyinjection.repository.datasource.ReadWriteDataSource;
-import com.example.ines.domain.entities.Circulo;
+import com.example.ines.data.repository.datasource.ReadWriteDataSource;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.Buffer;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 

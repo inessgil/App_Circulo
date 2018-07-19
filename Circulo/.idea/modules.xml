@@ -5,6 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/Circulo.iml" filepath="$PROJECT_DIR$/Circulo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data2/data2.iml" filepath="$PROJECT_DIR$/data2/data2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data2/data2.iml" filepath="$PROJECT_DIR$/data2/data2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_2/data_2.iml" filepath="$PROJECT_DIR$/data_2/data_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_2/data_2.iml" filepath="$PROJECT_DIR$/data_2/data_2.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
     </modules>
   </component>

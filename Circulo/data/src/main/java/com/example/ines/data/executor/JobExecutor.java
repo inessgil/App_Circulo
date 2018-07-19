@@ -1,4 +1,4 @@
-package com.example.ines.data.dependencyinjection.executor;
+package com.example.ines.data.executor;
 
 
 import com.example.ines.domain.executor.ThreadExecutor;

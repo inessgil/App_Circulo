@@ -39,7 +39,7 @@ public class ResultViewHolder extends RecyclerView.ViewHolder {
             result.setBackground(null);
         }
         item.setSelected(value);
-        //result.setChecked(true);
+        result.setChecked(true);
     }
     public interface OnItemSelectedListener {
         void onItemSelected(Result_item item);
