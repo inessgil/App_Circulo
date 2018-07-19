@@ -19,7 +19,10 @@ public class TiposFechaPresenter {
     private final GetCirculosByNameInteractor getCirculosByNameInteractor;
 
     @Inject
-    public TiposFechaPresenter(TiposFechaView tiposFechaView, GetCirculosByDateInteractor getCirculosByDateInteractor, GetCirculosByNameInteractor getCirculosByNameInteractor, GetCirculosInteractor getCirculosInteractor) {
+    public TiposFechaPresenter(TiposFechaView tiposFechaView,
+                               GetCirculosByDateInteractor getCirculosByDateInteractor,
+                               GetCirculosByNameInteractor getCirculosByNameInteractor,
+                               GetCirculosInteractor getCirculosInteractor) {
         this.tiposFechaView = tiposFechaView;
         this.getCirculosByDateInteractor = getCirculosByDateInteractor;
         this.getCirculosByNameInteractor = getCirculosByNameInteractor;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.example.ines.data.dependencyinjection.ForApp;
 import com.example.ines.data.repository.datasource.ReadWriteDataSource;
 
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ public class StorageDataSource implements ReadWriteDataSource {
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
     @Inject
-    StorageDataSource(Context context) {
+    StorageDataSource(@ForApp Context context) {
         this.context = context;
     }
 

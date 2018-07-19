@@ -19,12 +19,10 @@ import javax.inject.Inject;
 
 public class CirculoDataRepository implements CirculoRepository {
 
-    private final Context context;
     private final ReadWriteDataSource storageDataSource;
 
     @Inject
-    CirculoDataRepository(ReadWriteDataSource storageDataSource, @ForApp Context context) {
-        this.context = context;
+    CirculoDataRepository(ReadWriteDataSource storageDataSource) {
         this.storageDataSource = storageDataSource;
     }
 
