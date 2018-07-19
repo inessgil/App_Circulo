@@ -26,6 +26,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:focusable="false"
         android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/ll_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,18 +46,18 @@
         app:layout_constraintTop_toBottomOf="@+id/editable_text">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/b_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:layout_weight="0,5"
+            android:text="Vaciar" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/b_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Edit" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -85,18 +86,18 @@
         app:layout_constraintTop_toBottomOf="@+id/galery">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/b_deleteImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:layout_weight="0,5"
+            android:text="Eliminar" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/b_addImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Añadir nueva" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -123,17 +124,17 @@
         app:layout_constraintTop_toBottomOf="@+id/docs">
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/b_deleteDoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:layout_weight="0,5"
+            android:text="Eliminar" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/b_addDoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Añadir nuevo" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
