@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.ines.circulo.R;
 
@@ -23,20 +24,25 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
     List<GuionPart> list;
     GuionPresenter presenter;
 
-    @Inject
     public GuionAdapter (GuionPresenter presenter) {
         list = new ArrayList<> ();
         this.presenter = presenter;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.guion_element, parent, false);
-        return new ViewHolder(view);
+    public GuionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.guion_element, parent, false);
+        return new GuionAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(GuionAdapter.ViewHolder holder, int position) {
+        GuionPart part = list.get(position);
+        holder.editableText.setText(part.getEditable_text());
+        holder.text.setText(part.getText());
+        GalleryAdapter adapter = new GalleryAdapter(part.images, presenter);
+        holder.galery.setAdapter(adapter);
 
     }
 
@@ -66,10 +72,16 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
         Button deleteDocButton;
         @BindView(R.id.editable_text)
         EditText editableText;
+        @BindView(R.id.text)
+        TextView text;
+        @BindView(R.id.galery)
+        RecyclerView galery;
+        @BindView(R.id.docs)
+        RecyclerView docs;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         @OnClick(R.id.b_editText)
@@ -85,5 +97,7 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
                 presenter.saveText(text, getAdapterPosition());
             }
         }
+
+        //TODO: set add/delete images/docs buttons actions
     }
 }

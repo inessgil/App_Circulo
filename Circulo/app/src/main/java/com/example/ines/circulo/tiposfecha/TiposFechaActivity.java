@@ -93,11 +93,12 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
             }
             else {
                 if (date==null) {
-                    presenter.searchByName(types[group.getCheckedRadioButtonId()]);
+                    presenter.searchByName(types[checked]);
                 }
                 if( checked== -1 ) {
                     presenter.searchByDate(date);
                 }
+                else presenter.searchAll(date, types[checked]);
             }
         }
 
@@ -145,8 +146,8 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
     @Override
     public void showResults(List<String> list) {
         Intent intent = new Intent(context, ResultadoActivity.class);
-        ArrayList<String> arrayList = null;
-        arrayList.addAll(list);
+        ArrayList<String> arrayList = new ArrayList<>();
+        if ( list!= null) arrayList.addAll(list);
         intent.putStringArrayListExtra("list", arrayList);
         startActivity(intent);
     }

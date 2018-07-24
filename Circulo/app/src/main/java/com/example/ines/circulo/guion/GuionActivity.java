@@ -11,6 +11,8 @@ import com.example.ines.circulo.R;
 import com.example.ines.circulo.dependencyinjection.activity.ActivityModule;
 import com.example.ines.circulo.dependencyinjection.application.ViewModule;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -18,8 +20,8 @@ import butterknife.ButterKnife;
 
 public class GuionActivity extends AppCompatActivity implements GuionView{
 
-    String date;
-    String type;
+    private String date;
+    private String type;
     int op;
     @Inject
     GuionPresenter presenter;
@@ -27,7 +29,6 @@ public class GuionActivity extends AppCompatActivity implements GuionView{
     TextView titulo;
     @BindView(R.id.content)
     RecyclerView content;
-    @Inject
     GuionAdapter guionAdapter;
 
     @Override
@@ -42,11 +43,21 @@ public class GuionActivity extends AppCompatActivity implements GuionView{
                 .inject(this);
         date = getIntent().getStringExtra("date");
         type = getIntent().getStringExtra("type");
+        presenter.setParameters(date, type);
         op = getIntent().getIntExtra("load", 0);
-        titulo.setText("Circulo " + type + " - " + date);
+        String title_date = date.substring(0,2) + "/"
+                + date.substring(2,4) + "/"
+                + date.substring(4,8);
+        titulo.setText("Circulo " + type + " - " + title_date);
+        guionAdapter = new GuionAdapter(presenter);
         content.setAdapter(guionAdapter);
-        if (op==0) guionAdapter.setData(presenter.createGuion(type));
-        else guionAdapter.setData(presenter.loadGuion(date, type));
+        if (op==0) presenter.createNewGuion(type);
+        else presenter.loadGuion(date, type);
+    }
+
+    @Override
+    public void printGuion(List<GuionPart> guion) {
+        guionAdapter.setData(guion);
     }
 
     @Override

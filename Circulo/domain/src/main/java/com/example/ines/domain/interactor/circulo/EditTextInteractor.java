@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 public class EditTextInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private EditTextCallback callback;
     private Map<String, String> input;
 
     public interface EditTextCallback extends DefaultCallback<Void> {}
@@ -33,6 +32,7 @@ public class EditTextInteractor extends BaseUseCase<Void> implements Interactor<
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private EditTextCallback callback;
 
     @Inject
     public EditTextInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {

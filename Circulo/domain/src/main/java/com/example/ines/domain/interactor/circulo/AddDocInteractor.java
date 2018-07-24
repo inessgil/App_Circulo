@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 public class AddDocInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private AddDocCallback callback;
     private Map<String, String> input;
 
     public interface AddDocCallback extends DefaultCallback<Void> {}
@@ -33,6 +32,7 @@ public class AddDocInteractor extends BaseUseCase<Void> implements Interactor<Ma
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private AddDocCallback callback;
 
     @Inject
     public AddDocInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {

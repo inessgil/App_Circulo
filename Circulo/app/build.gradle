@@ -32,4 +32,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation project(path: ':data')
     implementation project(path: ':domain')
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.applandeo:material-calendar-view:1.0.1'
 }

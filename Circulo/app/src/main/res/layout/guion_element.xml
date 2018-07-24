@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -45,19 +44,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editable_text">
 
-        <Button
-            android:id="@+id/b_empty"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0,5"
-            android:text="Vaciar" />
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/b_editText"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/b_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Vaciar" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="Edit" />
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
+
+            <Button
+                android:id="@+id/b_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Edit" />
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -85,19 +102,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/galery">
 
-        <Button
-            android:id="@+id/b_deleteImage"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0,5"
-            android:text="Eliminar" />
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/b_addImage"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/b_deleteImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Eliminar" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="Añadir nueva" />
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
+
+            <Button
+                android:id="@+id/b_addImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Añadir nueva" />
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -123,18 +158,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/docs">
 
-        <Button
-            android:id="@+id/b_deleteDoc"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0,5"
-            android:text="Eliminar" />
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/b_addDoc"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/b_deleteDoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Eliminar" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="Añadir nuevo" />
+            card_view:cardCornerRadius="25dp"
+            card_view:cardElevation="4dp">
+
+            <Button
+                android:id="@+id/b_addDoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect"
+                android:text="Añadir nuevo" />
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

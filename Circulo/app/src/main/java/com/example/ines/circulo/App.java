@@ -7,6 +7,7 @@ import com.example.ines.circulo.dependencyinjection.application.ApplicationCompo
 import com.example.ines.circulo.dependencyinjection.application.ApplicationModule;
 import com.example.ines.circulo.dependencyinjection.application.DaggerApplicationComponent;
 
+
 public class App extends Application {
 
     ApplicationComponent component = null;

@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Interactor<Map<String, String>, Circulo> {
 
-    private GetCirculoCallback callback;
     private Map<String , String> name;
 
     public interface GetCirculoCallback extends DefaultCallback<Circulo>{}
@@ -33,6 +32,7 @@ public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Intera
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private GetCirculoCallback callback;
 
     @Inject
     public GetCirculoInteractor(PostExecutionThread postExecutionThread, ThreadExecutor executor, CirculoRepository repository) {
@@ -48,7 +48,7 @@ public class GetCirculoInteractor extends BaseUseCase<Circulo> implements Intera
 
     @Override
     public <R extends DefaultCallback<Circulo>> void execute(Map<String, String> input, R defaultCallback) {
-        this.callback = ((GetCirculoCallback) callback);
+        this.callback = ((GetCirculoCallback) defaultCallback);
         this.name = input;
         executor.execute(this);
     }

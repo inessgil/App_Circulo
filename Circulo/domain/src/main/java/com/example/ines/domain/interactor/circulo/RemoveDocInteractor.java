@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class RemoveDocInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-private RemoveDocCallback callback;
 private Map<String, String> input;
 
 public interface RemoveDocCallback extends DefaultCallback<Void> {}
@@ -31,6 +30,7 @@ public interface RemoveDocCallback extends DefaultCallback<Void> {}
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private RemoveDocCallback callback;
 
     public RemoveDocInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {
         super(postExecutionThread);

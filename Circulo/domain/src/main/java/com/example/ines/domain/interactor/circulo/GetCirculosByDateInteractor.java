@@ -15,7 +15,6 @@ import javax.inject.Inject;
 
 public class GetCirculosByDateInteractor extends BaseUseCase<List<String>> implements Interactor<Map<String, String>, List<String>> {
 
-    private GetCirculosByDateCallback callback;
     private Map<String , String> name;
 
     public interface GetCirculosByDateCallback extends DefaultCallback<List<String>> {}
@@ -34,6 +33,7 @@ public class GetCirculosByDateInteractor extends BaseUseCase<List<String>> imple
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private GetCirculosByDateCallback callback;
 
     @Inject
     public GetCirculosByDateInteractor(PostExecutionThread postExecutionThread, ThreadExecutor executor, CirculoRepository repository) {
@@ -49,7 +49,7 @@ public class GetCirculosByDateInteractor extends BaseUseCase<List<String>> imple
 
     @Override
     public <R extends DefaultCallback<List<String>>> void execute(Map<String, String> input, R defaultCallback) {
-        this.callback = ((GetCirculosByDateCallback) callback);
+        this.callback = ((GetCirculosByDateCallback) defaultCallback);
         this.name = input;
         executor.execute(this);
     }

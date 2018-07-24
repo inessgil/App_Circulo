@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,6 +34,10 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
     ResultadoPresenter presenter;
     @BindView(R.id.l_results)
     RecyclerView recyclerView;
+    @BindView(R.id.error_empty)
+    LinearLayout empty;
+    @BindView(R.id.b_accept)
+    Button b_accept;
 
     Result_Adapter adapter;
 
@@ -46,13 +51,22 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
                 .plus(new ActivityModule(this),
                         new ViewModule(this))
                 .inject(this);
-        lista = getIntent().getStringArrayListExtra("list");
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        List<Result_item> items = generateItems(lista);
-        adapter = new Result_Adapter(this, items);
-        recyclerView.setAdapter(adapter);
+        lista = getIntent().getStringArrayListExtra("list");
+        if(lista == null || lista.size()==0 ) {
+            showError(2);
+            recyclerView.setVisibility(View.GONE);
+            empty.setVisibility(View.VISIBLE);
+            b_accept.setClickable(false);
+            b_accept.setAlpha(.3f);
+        }
+        else {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            List<Result_item> items = generateItems(lista);
+            adapter = new Result_Adapter(this, items);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private List<Result_item> generateItems(ArrayList<String> lista) {
@@ -92,6 +106,9 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
         switch (code) {
             case 1:
                 message = "Por favor, elija un circulo";
+                break;
+            case 2:
+                message = "No se ha encontrado ningún círculo en la fecha y/o del tipo introducidos";
                 break;
         }
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

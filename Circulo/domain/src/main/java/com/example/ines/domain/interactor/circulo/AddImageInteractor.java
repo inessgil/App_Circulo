@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 public class AddImageInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private AddImageCallback callback;
     private Map<String, String> input;
 
     public interface AddImageCallback extends DefaultCallback<Void> {}
@@ -33,6 +32,7 @@ public class AddImageInteractor extends BaseUseCase<Void> implements Interactor<
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private AddImageCallback callback;
 
     @Inject
     public AddImageInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {

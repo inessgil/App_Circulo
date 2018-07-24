@@ -5,25 +5,25 @@ import java.util.List;
 
 public class Circulo {
 
-    private List<String> comentario;
+    private String comentario;
     private List<String> imagenesComentario;
     private List<String> docComentario;
-    private List<String> norma;
+    private String norma;
     private List<String> imagenesNorma;
     private List<String> docNorma;
-    private List<String> charla;
+    private String charla;
     private List<String> imagenesCharla;
     private List<String> docCharla;
-    private List<String> tertulia;
+    private String tertulia;
     private List<String> imagenesTertulia;
     private List<String> docTertulia;
 
     public Circulo () {}
 
-    public Circulo(List<String> comentario, List<String> imagenesComentario, List<String> docComentario,
-                   List<String> norma, List<String> imagenesNorma, List<String> docNorma,
-                   List<String> charla, List<String> imagenesCharla, List<String> docCharla,
-                   List<String> tertulia, List<String> imagenesTertulia, List<String> docTertulia) {
+    public Circulo(String comentario, List<String> imagenesComentario, List<String> docComentario,
+                   String norma, List<String> imagenesNorma, List<String> docNorma,
+                   String charla, List<String> imagenesCharla, List<String> docCharla,
+                   String tertulia, List<String> imagenesTertulia, List<String> docTertulia) {
         this.comentario = comentario;
         this.imagenesComentario = imagenesComentario;
         this.docComentario = docComentario;
@@ -38,11 +38,11 @@ public class Circulo {
         this.docTertulia = docTertulia;
     }
 
-    public List<String> getComentario() {
+    public String getComentario() {
         return comentario;
     }
 
-    public void setComentario(List<String> comentario) {
+    public void setComentario(String comentario) {
         this.comentario = comentario;
     }
 
@@ -54,11 +54,11 @@ public class Circulo {
         this.imagenesComentario = imagenesComentario;
     }
 
-    public List<String> getNorma() {
+    public String getNorma() {
         return norma;
     }
 
-    public void setNorma(List<String> norma) {
+    public void setNorma(String norma) {
         this.norma = norma;
     }
 
@@ -70,11 +70,11 @@ public class Circulo {
         this.imagenesNorma = imagenesNorma;
     }
 
-    public List<String> getCharla() {
+    public String getCharla() {
         return charla;
     }
 
-    public void setCharla(List<String> charla) {
+    public void setCharla(String charla) {
         this.charla = charla;
     }
 
@@ -86,11 +86,11 @@ public class Circulo {
         this.imagenesCharla = imagenesCharla;
     }
 
-    public List<String> getTertulia() {
+    public String getTertulia() {
         return tertulia;
     }
 
-    public void setTertulia(List<String> tertulia) {
+    public void setTertulia(String tertulia) {
         this.tertulia = tertulia;
     }
 

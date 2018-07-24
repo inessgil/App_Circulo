@@ -6,31 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".portada.PortadaActivity">
 
-    <Button
-        android:id="@+id/b_nuevo"
-        android:layout_width="254dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="19dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="315dp"
-        android:text="Nuevo"
-        app:layout_constraintBottom_toTopOf="@+id/b_cargar"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_b1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/card_b2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="25dp">
 
-    <Button
-        android:id="@+id/b_cargar"
-        android:layout_width="254dp"
-        android:layout_height="62dp"
-        android:layout_marginBottom="49dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="19dp"
-        android:text="Cargar"
+        <Button
+            android:id="@+id/b_nuevo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@drawable/ripple_effect"
+            android:text="Nuevo" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_b2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b_nuevo" />
+        app:layout_constraintTop_toBottomOf="@id/card_b1"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="25dp">
+
+        <Button
+            android:id="@+id/b_cargar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="@drawable/ripple_effect"
+            android:text="Cargar" />
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/card_b1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
 </android.support.constraint.ConstraintLayout>

@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class RemoveImageInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private RemoveImageCallback callback;
     private Map<String, String> input;
 
     public interface RemoveImageCallback extends DefaultCallback<Void> {}
@@ -31,6 +30,7 @@ public class RemoveImageInteractor extends BaseUseCase<Void> implements Interact
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private RemoveImageCallback callback;
 
     public RemoveImageInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {
         super(postExecutionThread);

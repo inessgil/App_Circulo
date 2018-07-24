@@ -82,9 +82,11 @@ public class CirculoDataRepository implements CirculoRepository {
     public void getCirculos(String date, String name, GetCirculosCallback callback) {
         try {
             List<String> list = storageDataSource.getCirculos();
-            for ( String i : list) {
-                if (!i.contains(date) && !i.contains(name)) {
-                    list.remove(i);
+            if(list!=null) {
+                for (String i : list) {
+                    if (!i.contains(date) && !i.contains(name)) {
+                        list.remove(i);
+                    }
                 }
             }
             callback.onSuccess(list);
@@ -148,7 +150,7 @@ public class CirculoDataRepository implements CirculoRepository {
         String comentario = pattern.split(s)[0];
         text = pattern_text.split(comentario);
         aux.addAll(Arrays.asList(text));
-        circulo.setComentario(aux);
+        circulo.setComentario(aux.get(0));
         aux.clear();
         images = pattern_image.split(comentario);
         aux.addAll(Arrays.asList(images));
@@ -164,7 +166,7 @@ public class CirculoDataRepository implements CirculoRepository {
         String norma = pattern.split(s)[0];
         text = pattern_text.split(norma);
         aux.addAll(Arrays.asList(text));
-        circulo.setNorma(aux);
+        circulo.setNorma(aux.get(0));
         aux.clear();
         images = pattern_image.split(norma);
         aux.addAll(Arrays.asList(images));
@@ -180,7 +182,7 @@ public class CirculoDataRepository implements CirculoRepository {
         String charla = pattern.split(s)[0];
         text = pattern_text.split(charla);
         aux.addAll(Arrays.asList(text));
-        circulo.setCharla(aux);
+        circulo.setCharla(aux.get(0));
         aux.clear();
         images = pattern_image.split(charla);
         aux.addAll(Arrays.asList(images));
@@ -196,7 +198,7 @@ public class CirculoDataRepository implements CirculoRepository {
         String tertulia = pattern.split(s)[0];
         text = pattern_text.split(tertulia);
         aux.addAll(Arrays.asList(text));
-        circulo.setTertulia(aux);
+        circulo.setTertulia(aux.get(0));
         aux.clear();
         images = pattern_image.split(tertulia);
         aux.addAll(Arrays.asList(images));

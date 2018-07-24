@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class RemoveCirculoInteractor extends BaseUseCase<Void> implements Interactor<Map<String, String>, Void> {
 
-    private RemoveCirculoCallback callback;
     private Map<String, String> input;
 
     public interface RemoveCirculoCallback extends DefaultCallback<Void> {}
@@ -31,6 +30,7 @@ public class RemoveCirculoInteractor extends BaseUseCase<Void> implements Intera
 
     private final CirculoRepository repository;
     private final ThreadExecutor executor;
+    private RemoveCirculoCallback callback;
 
     public RemoveCirculoInteractor(PostExecutionThread postExecutionThread, CirculoRepository repository, ThreadExecutor executor) {
         super(postExecutionThread);
