@@ -118,7 +118,7 @@ public class GuionPresenter {
         Map<String, String> map = new HashMap<>();
         map.put("date", date);
         map.put("name", type);
-        getCirculoInteractor.execute(map, new DefaultCallback<Circulo>() {
+        getCirculoInteractor.execute(map, new GetCirculoInteractor.GetCirculoCallback() {
             @Override
             public void onError(ErrorBundle errorBundle) {
                 guionView.showError(1);
@@ -139,7 +139,7 @@ public class GuionPresenter {
         map.put("name", type);
         map.put("topic", topic);
         map.put("content", text);
-        editTextInteractor.execute(map, new DefaultCallback<Void>() {
+        editTextInteractor.execute(map, new EditTextInteractor.EditTextCallback() {
             @Override
             public void onError(ErrorBundle errorBundle) {
                 guionView.showError(1);
@@ -157,13 +157,13 @@ public class GuionPresenter {
         switch (type) {
             case ("estudiantes"):
                     switch (adapterPosition) {
-                        case 1:
+                        case 0:
                             return "comentario";
-                        case 2:
+                        case 1:
                             return "norma";
-                        case 3:
+                        case 2:
                             return "charla";
-                        case 4:
+                        case 3:
                             return "tertulia";
                     }
                 break;

@@ -61,10 +61,11 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
             b_accept.setAlpha(.3f);
         }
         else {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            LinearLayoutManager layoutManager =
+                    new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(layoutManager);
             List<Result_item> items = generateItems(lista);
-            adapter = new Result_Adapter(this, items);
+            adapter = new Result_Adapter(this, items, this);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -92,7 +93,8 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
         }
         else {
             Result_item item = selectedItems.get(0);
-            presenter.loadCirculo(item.getName());
+            Toast.makeText(this, item.name, Toast.LENGTH_LONG).show();
+            //presenter.loadCirculo(item.getName());
         }
     }
 

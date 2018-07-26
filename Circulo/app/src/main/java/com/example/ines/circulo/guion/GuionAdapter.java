@@ -1,5 +1,7 @@
 package com.example.ines.circulo.guion;
 
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +25,12 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
 
     List<GuionPart> list;
     GuionPresenter presenter;
+    Context context;
 
-    public GuionAdapter (GuionPresenter presenter) {
+    public GuionAdapter (GuionPresenter presenter, Context context) {
         list = new ArrayList<> ();
         this.presenter = presenter;
+        this.context = context;
     }
 
     @Override
@@ -42,8 +46,11 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
         holder.editableText.setText(part.getEditable_text());
         holder.text.setText(part.getText());
         GalleryAdapter adapter = new GalleryAdapter(part.images, presenter);
+        holder.galery.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.galery.setAdapter(adapter);
-
+        DocsAdapter docsAdapter = new DocsAdapter(presenter, part.docs);
+        holder.docs.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        holder.docs.setAdapter(docsAdapter);
     }
 
     @Override
@@ -86,13 +93,15 @@ public class GuionAdapter extends RecyclerView.Adapter<GuionAdapter.ViewHolder>{
 
         @OnClick(R.id.b_editText)
         void edit () {
-            if (editSaveTextButton.getText() == "Editar") {
+            if (editSaveTextButton.getText().toString().equals("Editar")) {
                 editSaveTextButton.setText("Guardar");
-                editSaveTextButton.setFocusable(true);
+                editableText.setEnabled(true);
+                editableText.setFocusableInTouchMode(true);
             }
             else {
                 editSaveTextButton.setText("Editar");
-                editSaveTextButton.setFocusable(false);
+                editableText.setEnabled(true);
+                editableText.setFocusable(false);
                 String text = editableText.getText().toString();
                 presenter.saveText(text, getAdapterPosition());
             }

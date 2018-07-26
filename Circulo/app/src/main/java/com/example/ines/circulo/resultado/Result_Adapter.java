@@ -22,33 +22,39 @@ import butterknife.OnClick;
 
 public class Result_Adapter extends RecyclerView.Adapter implements ResultViewHolder.OnItemSelectedListener {
 
-    @Inject
     Context context;
     ResultViewHolder.OnItemSelectedListener listener;
 
     List<Result_item> list;
 
-    public Result_Adapter(ResultViewHolder.OnItemSelectedListener listener, List<Result_item> list) {
+    public Result_Adapter(ResultViewHolder.OnItemSelectedListener listener, List<Result_item> list, Context context) {
         this.list = list;
         this.listener = listener;
+        this.context = context;
     }
 
     @Override
     public ResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_element, parent, false);
-        return new ResultViewHolder(view, this);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.result_element, parent, false);
+        return new ResultViewHolder(view, this, context);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ResultViewHolder holder = (ResultViewHolder) viewHolder;
         Result_item item = list.get(position);
+        holder.item = item;
         String name = item.getName();
-        holder.result.setText(name);
+        //25072018_estudiantes
+        String aux = name.substring(9, name.length()) + " "
+                + name.substring(0,2) + "/"
+                + name.substring(2, 4) + "/"
+                + name.substring(4,8);
+        holder.result.setText(aux);
+        holder.result.setChecked(false);
         TypedValue value = new TypedValue();
         holder.result.getContext().getTheme().resolveAttribute(android.R.attr.listChoiceIndicatorSingle, value, true);
-        int checkMarkDrawableResId = value.resourceId;
-        holder.result.setCheckMarkDrawable(checkMarkDrawableResId);
         holder.item = item;
         holder.setChecked(holder.item.isSelected());
     }
@@ -73,6 +79,8 @@ public class Result_Adapter extends RecyclerView.Adapter implements ResultViewHo
             if (!result_item.equals(item) && result_item.isSelected()) {
                 result_item.setSelected(false);
             } else if (result_item.equals(item) && item.isSelected()) {
+                result_item.setSelected(false);
+            } else if (result_item.equals(item) && !item.isSelected()) {
                 result_item.setSelected(true);
             }
         }

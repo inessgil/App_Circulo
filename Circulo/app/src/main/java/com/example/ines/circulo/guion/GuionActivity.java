@@ -2,6 +2,7 @@ package com.example.ines.circulo.guion;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,9 +50,12 @@ public class GuionActivity extends AppCompatActivity implements GuionView{
                 + date.substring(2,4) + "/"
                 + date.substring(4,8);
         titulo.setText("Circulo " + type + " - " + title_date);
-        guionAdapter = new GuionAdapter(presenter);
+        content.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        guionAdapter = new GuionAdapter(presenter, this);
         content.setAdapter(guionAdapter);
-        if (op==0) presenter.createNewGuion(type);
+        if (op==0){ //NEW
+            presenter.createNewGuion(type);
+        }
         else presenter.loadGuion(date, type);
     }
 

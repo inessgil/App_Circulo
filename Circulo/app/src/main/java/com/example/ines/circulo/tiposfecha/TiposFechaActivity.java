@@ -3,6 +3,7 @@ package com.example.ines.circulo.tiposfecha;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CalendarView;
 import android.widget.RadioButton;
@@ -19,6 +20,7 @@ import com.example.ines.circulo.resultado.ResultadoActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,6 +48,7 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
     CalendarView calendar;
     int type; //0:new; 1:load existing
     String [] types = {"estudiantes"};
+    String date;
 
     @Inject
     TiposFechaPresenter presenter;
@@ -66,13 +69,22 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
         type = getIntent().getIntExtra("TYPE", -1);
         calendar.setDate(System.currentTimeMillis(),false,true);
         group.clearCheck();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
+        date = simpleDateFormat.format(calendar.getDate());
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                if(month<10) {
+                    date = String.valueOf(day) + "0" + String.valueOf(month+1) + String.valueOf(year);
+                }
+                else date = String.valueOf(day) + String.valueOf(month) + String.valueOf(year);
+            }
+        });
     }
 
     @OnClick(R.id.b_aceptar)
     public void submit () {
         int checked = getChecked();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
-        String date = simpleDateFormat.format(calendar.getDate());
 
         // NEW
         if ( type == 0 ) {
@@ -134,6 +146,10 @@ public class TiposFechaActivity extends AppCompatActivity implements TiposFechaV
                 break;
             case 3:
                 errorMessage = "Por favor, selecciona un círculo";
+                break;
+            case 4:
+                //TODO: Make possible to change name of file
+                errorMessage = "El circulo que quieres crear ya existe";
                 break;
         }
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();

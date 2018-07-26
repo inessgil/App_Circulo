@@ -1,11 +1,15 @@
 package com.example.ines.circulo.resultado;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckedTextView;
 
 import com.example.ines.circulo.R;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,30 +20,37 @@ public class ResultViewHolder extends RecyclerView.ViewHolder {
     Result_item item;
     @BindView(R.id.tv_result)
     CheckedTextView result;
+    CardView card;
+
+    Context context;
+
     OnItemSelectedListener itemSelectedListener;
 
-    public ResultViewHolder(View itemView, OnItemSelectedListener listener) {
+    public ResultViewHolder(View itemView, OnItemSelectedListener listener, Context context) {
         super(itemView);
         itemSelectedListener = listener;
+        this.context = context;
         ButterKnife.bind(itemView);
-        item.setName(result.getText().toString());
-    }
-
-    @OnClick(R.id.tv_result)
-    public void check (View view) {
-        setChecked(true);
-        itemSelectedListener.onItemSelected(item);
+        card = itemView.findViewById(R.id.card);
+        result = itemView.findViewById(R.id.tv_result);
+        result.setCheckMarkDrawable(null);
+        result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemSelectedListener.onItemSelected(item);
+            }
+        });
     }
 
     public void setChecked (boolean value) {
         if(value) {
-            result.setBackgroundColor(Color.GRAY);
+            card.setCardBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         }
         else {
-            result.setBackground(null);
+            card.setCardBackgroundColor(context.getResources().getColor(R.color.transparent));
         }
         item.setSelected(value);
-        result.setChecked(true);
+        result.setChecked(value);
     }
     public interface OnItemSelectedListener {
         void onItemSelected(Result_item item);

@@ -78,7 +78,28 @@ public class TiposFechaPresenter {
         });
     }
 
-    public void newCirculo(String date, String type) {
-        tiposFechaView.newCirculo(date, type);
+    public void newCirculo(final String date, final String type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("date", date);
+        map.put("name", type);
+        getCirculosInteractor.execute(map, new GetCirculosInteractor.GetCirculosCallback() {
+            @Override
+            public void onError(ErrorBundle errorBundle) {
+                tiposFechaView.newCirculo(date, type);
+            }
+
+            @Override
+            public void onSuccess(List<String> returnParam) {
+                if (returnParam.isEmpty()) tiposFechaView.newCirculo(date, type);
+                else {
+                    boolean found = false;
+                    for (String i : returnParam) if ( i.equals(date + "_" + type + ".txt")) found = true;
+                    if (!found) tiposFechaView.newCirculo(date, type);
+                    else {
+                        tiposFechaView.showError(4);
+                    }
+                }
+            }
+        });
     }
 }

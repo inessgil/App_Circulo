@@ -25,6 +25,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:enabled="false"
         android:focusable="false"
         android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/ll_text"
@@ -73,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_effect"
-                android:text="Edit" />
+                android:text="Editar" />
         </android.support.v7.widget.CardView>
     </LinearLayout>
 

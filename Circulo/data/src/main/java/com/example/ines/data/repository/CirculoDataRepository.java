@@ -11,6 +11,7 @@ import com.example.ines.domain.exception.ErrorBundle;
 import com.example.ines.domain.interactor.DefaultCallback;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -83,9 +84,10 @@ public class CirculoDataRepository implements CirculoRepository {
         try {
             List<String> list = storageDataSource.getCirculos();
             if(list!=null) {
-                for (String i : list) {
-                    if (!i.contains(date) && !i.contains(name)) {
+                for (int i = 0; i< list.size(); i++) {
+                    if (!list.get(i).contains(date) || !list.get(i).contains(name)) {
                         list.remove(i);
+                        i--;
                     }
                 }
             }
@@ -255,6 +257,12 @@ public class CirculoDataRepository implements CirculoRepository {
         try {
             if (!storageDataSource.existsCirculo(date, name)) {
                 storageDataSource.newCirculo(date, name);
+            }
+            else {
+                if(storageDataSource.getCirculo(date, name).equals("")) {
+                    storageDataSource.removeCirculo(date, name);
+                    storageDataSource.newCirculo(date, name);
+                }
             }
             storageDataSource.editText(date, name, topic, content);
         } catch (final IOException e) {

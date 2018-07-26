@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,8 +32,8 @@ public class StorageDataSource implements ReadWriteDataSource {
     @Override
     public List<String> getCirculos() throws IOException {
         String [] list = context.fileList();
-        List<String> output = null;
-        for (String i : list) output.add(i);
+        List<String> output = new ArrayList<>();
+        if ( list!= null) for (String i : list) output.add(i);
         return output;
     }
 
@@ -55,8 +56,10 @@ public class StorageDataSource implements ReadWriteDataSource {
     @Override
     public Boolean existsCirculo(String date, String name) throws IOException {
         List<String> list = getCirculos();
-        for ( String i : list) {
-            if (i.contains(date+"_"+name)) return true;
+        if (list != null) {
+            for (String i : list) {
+                if (i.contains(date + "_" + name)) return true;
+            }
         }
         return false;
     }
@@ -76,8 +79,8 @@ public class StorageDataSource implements ReadWriteDataSource {
      */
     @Override
     public void editText(String date, String name, String topic, String text) throws IOException {
-        String externalFileName = topic + "_" + name + "_" + date + ".txt";
-        String internalFileName = date + "_" + name + ".txt";
+        String externalFileName = topic + "_" + "_" + date + ".txt";
+        String internalFileName = date + "_" + name;
 
         //Eternal storage
         File appDirectory = new File(PATH + "/" + EXTERNAL_DIRECTORY);
@@ -121,7 +124,7 @@ public class StorageDataSource implements ReadWriteDataSource {
 
     @Override
     public String getCirculo(String date, String name) throws IOException {
-        return readFile (date + "_" + name + ".txt");
+        return readFile (date + "_" + name);
     }
 
     private String readFile(String fileName) {
@@ -136,6 +139,7 @@ public class StorageDataSource implements ReadWriteDataSource {
                 readString = bufferedReader.readLine();
             }
             inputStreamReader.close();
+            return content.toString();
         }
         catch (Exception e) {
             e.printStackTrace();
