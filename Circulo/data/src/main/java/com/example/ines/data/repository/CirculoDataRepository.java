@@ -2,6 +2,7 @@ package com.example.ines.data.repository;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.ines.data.dependencyinjection.ForApp;
 import com.example.ines.data.repository.datasource.ReadWriteDataSource;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -138,32 +140,35 @@ public class CirculoDataRepository implements CirculoRepository {
     //TODO: Review
     private Circulo createCirculo(String s) {
         Circulo circulo = new Circulo();
-        Pattern pattern;
-        Pattern pattern_text = Pattern.compile("(?<=<texto>)(.*?)(?=</texto>)");
-        Pattern pattern_image = Pattern.compile("(?<=<imagen>)(.*?)(?=</imagen>)");
-        Pattern pattern_doc = Pattern.compile("(?<=<doc>)(.*?)(?=</doc>)");
-        String [] text;
-        String [] images;
-        String [] docs;
-        List<String> aux = null;
+        String text;
+        List<String> images = new ArrayList<>();
+        List<String> docs = new ArrayList<>();
+
+        String comentario = s.substring(s.indexOf("<comentario>") + 11 + 1, s.indexOf("</comentario>"));
+        String norma = s.substring(s.indexOf("<norma>") + 6 + 1, s.indexOf("</norma>"));
+        String charla = s.substring(s.indexOf("<charla>") + 7 + 1, s.indexOf("</charla>"));
+        String tertulia = s.substring(s.indexOf("<tertulia>") + 9 + 1, s.indexOf("</tertulia>"));
+
 
         /** Extract comentario */
-        pattern = Pattern.compile("(?<=<comentario>)(.*?)(?=</comentario>)");
-        String comentario = pattern.split(s)[0];
-        text = pattern_text.split(comentario);
-        aux.addAll(Arrays.asList(text));
-        circulo.setComentario(aux.get(0));
-        aux.clear();
-        images = pattern_image.split(comentario);
-        aux.addAll(Arrays.asList(images));
-        circulo.setImagenesComentario(aux);
-        aux.clear();
-        docs = pattern_doc.split(comentario);
-        aux.addAll(Arrays.asList(docs));
-        circulo.setDocComentario(aux);
-        aux.clear();
+        text = comentario.substring(comentario.indexOf("<texto>") + 7, comentario.indexOf("</texto>"));
+        circulo.setComentario(text);
+        String aux = comentario;
+        while (aux.contains("<imagen>")) {
+            images.add(aux.substring(aux.indexOf("<imagen>") + 8, aux.indexOf("</imagen>")));
+            aux = aux.substring(aux.indexOf("</imagen>") + 9, aux.length());
+        }
+        circulo.setImagenesComentario(images);
+        images.clear();
+        aux = comentario;
+        while (aux.contains("<doc>")) {
+            docs.add(aux.substring(aux.indexOf("<doc>") + 8, aux.indexOf("</doc>")));
+            aux = aux.substring(aux.indexOf("</doc>") + 9, aux.length());
+        }
+        circulo.setImagenesComentario(docs);
+        docs.clear();
 
-        /** Extract norma */
+        /** Extract norma *//*
         pattern = Pattern.compile("(?<=<norma>)(.*?)(?=</norma>)");
         String norma = pattern.split(s)[0];
         text = pattern_text.split(norma);
@@ -177,9 +182,9 @@ public class CirculoDataRepository implements CirculoRepository {
         docs = pattern_doc.split(norma);
         aux.addAll(Arrays.asList(docs));
         circulo.setDocNorma(aux);
-        aux.clear();
+        aux.clear();*/
 
-        /** Extract charla */
+        /** Extract charla *//*
         pattern = Pattern.compile("(?<=<charla>)(.*?)(?=</charla>)");
         String charla = pattern.split(s)[0];
         text = pattern_text.split(charla);
@@ -195,7 +200,7 @@ public class CirculoDataRepository implements CirculoRepository {
         circulo.setDocCharla(aux);
         aux.clear();
 
-        /** Extract tertulia */
+        /** Extract tertulia *//*
         pattern = Pattern.compile("(?<=<tertulia>)(.*?)(?=</tertulia>)");
         String tertulia = pattern.split(s)[0];
         text = pattern_text.split(tertulia);
@@ -210,7 +215,7 @@ public class CirculoDataRepository implements CirculoRepository {
         aux.addAll(Arrays.asList(docs));
         circulo.setDocTertulia(aux);
         aux.clear();
-
+*/
         return circulo;
     }
 

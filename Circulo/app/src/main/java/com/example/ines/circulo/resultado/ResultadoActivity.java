@@ -93,8 +93,7 @@ public class ResultadoActivity extends AppCompatActivity implements ResultadoVie
         }
         else {
             Result_item item = selectedItems.get(0);
-            Toast.makeText(this, item.name, Toast.LENGTH_LONG).show();
-            //presenter.loadCirculo(item.getName());
+            presenter.loadCirculo(item.getName());
         }
     }
 

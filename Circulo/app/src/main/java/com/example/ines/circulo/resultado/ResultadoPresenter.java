@@ -13,7 +13,7 @@ public class ResultadoPresenter {
 
     public void loadCirculo(String name) {
         String date = name.split("_")[0];
-        String type = name.split("_")[1].split(".")[0];
+        String type = name.split("_")[1];
         resultadoView.loadCirculo(date, type);
     }
 }
